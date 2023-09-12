@@ -171,3 +171,35 @@ Bean Configuration
 
         EmployeeServicve es = (EmployeeService) context.getBean("employeeServiceImpl");
 
+Autowiring
+
+    byType              @Autowired
+
+    byName              @Autowired
+                        @Qualifier("beanId")
+
+
+    byField             apply the @Autiwired / @Autowired and @Qualifier on the field
+    byConstructor       apply the @Autiwired / @Autowired and @Qualifier on the constructor
+    bySetter            apply the @Autiwired / @Autowired and @Qualifier on the setter
+
+@Scope
+
+    prototype
+    singleton           default
+    request
+    session
+    global-session
+
+    @Scope annoation is use alongise the @Component or @Bean
+
+Externalizing Configuaration Through .properties file
+
+    application.properties
+
+        key=value
+
+    @PropertySource("classpath:application.properties")     alongside @Configuration
+
+    @Value("${key:default value}")
+    private primitiveTypeOrString field;
