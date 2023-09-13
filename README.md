@@ -203,3 +203,96 @@ Externalizing Configuaration Through .properties file
 
     @Value("${key:default value}")
     private primitiveTypeOrString field;
+
+Spring Boot
+
+    is a another spring framework module that offer auto-configuration to provide RAD ( Rapid Application Developmnet).
+
+    it uses starter packages for each and every spring module, where a starter package is a combination of the module and
+    ite defualt configs.
+
+    these default config, allow the developer to right way start the application out of the box, and these configs
+    are customizable if needed.
+
+    @SpringBootApplication  =   @Configuration
+                                @ComponentScan
+                                @PropertySource
+
+
+    the application.proeprties file is the deautl properties file for any spring boot project
+    and the application main lcass itself is the configration class.
+    the root-package in which the application main class resides, itself is the base-package for ComponentScan
+
+    Spring Boot Application can be created using:
+        1. STS
+        2. Spring Initializer as on https://start.spring.io 
+        3. Spring Boot CLI
+
+    
+    @SpringBootApplication
+    public class SpringIocBootDemoApplication {
+
+        public static void main(String[] args) {
+            SpringApplication.run(SpringIocBootDemoApplication.class, args);
+        }
+
+    }
+
+    SpringApplication.run
+
+            1. Create the ApplicationContext
+            2. The applicationContext then will load all the beans
+            3. the Spring Runners, if nay, are executed
+            4. the emebeded server , if any, is started
+            5. Once the server, if any started, shuts down, 
+            6. the applicationContext is claosed and the application terminates
+
+    Spring Runner is a class that implements CommandLineRunner or ApplicationRunner interfaces
+        CommandLineRunner   public void run(String ...arg)
+        ApplicationRunner   public void run(ApplicationArgument ...arg) 
+
+    
+Spring Data JPA integrating with Spring Boot
+
+    CrudRepository
+        |
+        |- JpaRepository
+
+                save(entity)
+                deleteById(pk)
+                existsById(pk)
+                findById(pk)
+                findAll()
+
+
+    @Entity
+    public class Customer {
+        @Id
+        @GeneratedValue(strategy=GeneratedValue.AUTO)
+        private Long customerPNR;
+        private String fullName;
+        private String mobileNumber;
+        private String mailId;
+        private LocalDate registrationDate;
+
+        //setter, getters and constructors
+    }
+
+    public interface CustomerRepo extends JpaRepository<Customer,Long>{
+
+        boolean existsByMobileNumber(String mobileNumber);
+        Optional<Customer> findByMobileNumber(String mobileNumber);
+        List<Customer> findAllByFullName(String fullName);
+
+        @Query("SELECT c FROM Customer WHERE c.registrationDate BETWEEN :start AND :end")
+        List<Customer> extractCustoemrRegistedBetween(LocalDate start,LocalDate end);
+
+    }
+
+
+
+
+
+
+
+
